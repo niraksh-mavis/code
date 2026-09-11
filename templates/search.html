@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Employee Directory - SecureCorp{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Employee Directory</h2>
+    <form action="/search" method="GET" class="search-form">
+        <input type="text" id="searchInput" name="q" value="{{ query }}" placeholder="Search by name or title...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div class="search-status" id="liveStatus"></div>
+
+    <div class="results-table-wrapper">
+        <table class="table" id="resultsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                    <tr>
+                        <td>{{ u['id'] }}</td>
+                        <td><a href="/profile?id={{ u['id'] }}">{{ u['username'] }}</a></td>
+                        <td>{{ u['email'] }}</td>
+                        <td>{{ u['role'] }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4">No employees matching your search criteria.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

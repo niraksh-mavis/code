@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Activity Feed - SecureCorp{% endblock %}
+
+{% block content %}
+<div class="header-section">
+    <h2>Company Feed & Bulletin Board</h2>
+    <p>Post announcements and view team updates in real-time.</p>
+</div>
+
+<div class="grid">
+    <div class="feed-col">
+        <h3>Recent Announcements</h3>
+        {% for comment in comments %}
+            <div class="card comment-card">
+                <div class="card-meta">
+                    <strong>{{ comment.author }}</strong> on <span>{{ comment.created_at }}</span>
+                </div>
+                <!-- Vulnerability: Stored XSS via raw HTML rendering (| safe) -->
+                <div class="card-body">
+                    {{ comment.content | safe }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="sidebar-col">
+        <div class="card">
+            <h3>Post an Announcement</h3>
+            {% if session.get('user') %}
+                <form action="/comment" method="POST">
+                    <div class="form-group">
+                        <label for="content">Message</label>
+                        <textarea id="content" name="content" rows="4" placeholder="Share news or feedback..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </form>
+            {% else %}
+                <p>Please <a href="/login">sign in</a> to post announcements.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

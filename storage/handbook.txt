@@ -1,0 +1,4 @@
+Company Employee Handbook - Confidential Internal Document
+1. Respect all security procedures.
+2. Do not disclose corporate credentials.
+3. Report vulnerabilities immediately.

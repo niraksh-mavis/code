@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile - SecureCorp{% endblock %}
+
+{% block content %}
+<div class="card profile-card">
+    <h2>User Profile</h2>
+    <!-- Vulnerability: Reflected XSS when user passes custom greeting or query -->
+    <div class="welcome-banner">
+        <h3>{{ banner_html | safe }}</h3>
+    </div>
+
+    {% if user %}
+        <div class="profile-details">
+            <p><strong>User ID:</strong> {{ user['id'] }}</p>
+            <p><strong>Username:</strong> {{ user['username'] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
+            <p><strong>Role:</strong> <span class="badge">{{ user['role'] }}</span></p>
+            <p><strong>Bio:</strong> {{ user['bio'] }}</p>
+        </div>
+    {% else %}
+        <p>User not found.</p>
+    {% endif %}
+</div>
+{% endblock %}
